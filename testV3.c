@@ -3,7 +3,7 @@ int buffer[8];
 int head=0;
 int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth, vel;
 vel_max = 65;
-vel_r=43;
+vel_r=35;
 vel_curva_st = 40;
 vel_curva_hd = 10;
 vel_rotl = 20;
@@ -25,13 +25,12 @@ int direction(int groundSensor){
 		if(buffer[i]==0x18) countL++;	//11000
 		if(buffer[i]==0x00) countB++;	//00000
 	}
-	printf("%d\n",countB);
-	if(groundSensor==0x1c || groundSensor==0x04)return front;
+	if(groundSensor==0x1c || groundSensor==0x04) return front;
 	else if(countR<2 && countL>=2) return left;
+	else if(countR>=2 || countF<=5) return right;
 	else if(groundSensor==0x06) return slightRight;
 	else if(groundSensor==0x0c) return slightLeft; 
-	else if(countR>=2 || countF<=5) return right;
-	else if(countB>=5) return back;
+	else if(countB>=5 && groundSensor==0x00) return back;
 	else if(countF>=7) return stop;
 	else return -1;
 }
@@ -98,7 +97,6 @@ int main(void){
 					
 			}
 			if(option==stop) break;
-			waitTick80ms();
 		}while(!stopButton());
 		setVel2(0, 0);
   	}
