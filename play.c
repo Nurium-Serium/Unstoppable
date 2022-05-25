@@ -10,21 +10,16 @@
 // ****************************************************************************
 //
 #include "mr32.h"
-//int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth;
+int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth;
 
-int vel_max = 65;
-int vel_curva_st = 40;
-int vel_curva_hd = 10;
-int vel_rotl = 20;
-int vel_roth = 50;
-int count= 0;
-int buffer_size= 8;
-int buffer[8];
-int flag= 0;
+vel_max = 65;
+vel_curva_st = 40;
+vel_curva_hd = 10;
+vel_rotl = 20;
+vel_roth = 50;
 
 void turnLeft(void){
 	setVel2(-vel_rotl, vel_roth);
-	delay(500);
 }
 
 void slight_Left(int vel){
@@ -46,17 +41,9 @@ void in_front(void){
 	setVel2(vel_max,vel_max);
 }
 
-void decision(){
-	count++;
-	if(count>= buffer_size){
-		count= 0;
-	}
-}
-
 int main(void)
 {
    int groundSensor;
-   //int buffer[8];
 
    initPIC32();
    closedLoopControl( true );
@@ -85,36 +72,26 @@ int main(void)
                in_front();
                break;
             case 0x0C:  // 0b01100:
-               slight_Right(vel_curva_st);
+               slight_right(vel_curva_st);
                break;
             case 0x08:  // 0b01000:
-               slight_Right(vel_curva_hd);
+               slight_right(vel_curva_hd);
                break;
-            case 0x34:  // 0b10000:
+            case 0x10:  // 0b10000:
                turnLeft();
                break;
             case 0x06:  // 0b00110:
-               slight_Left(vel_curva_st);
+               slight_left(vel_curva_st);
                break;
             case 0x02:  // 0b00010:
-               slight_Left(vel_curva_hd);
+               slight_left(vel_curva_hd);
                break;
             case 0x01:  // 0b00001:
                turnRight();
                break;
             case 0x1f:
-            	//decision();
-            	flag++;
-            	in_front();
-            	delay(100);
-            	if(flag== 1){
-            		decision();
-            		flag= 0;
-            	}
+            	turnRight();
             	break;
-            case 0x00:
-            	setVel2(-vel_curva_st, vel_curva_st);
-            	break;	
             default:
                break;
          }
@@ -123,4 +100,3 @@ int main(void)
    }
    return 0;
 }
-

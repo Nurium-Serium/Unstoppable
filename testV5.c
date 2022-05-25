@@ -3,8 +3,8 @@ int buffer[8];
 int head=0;
 int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth, vel;
 vel_max = 65;
-vel_r=45;
-vel_curva_st = 40;
+vel_r=35;
+vel_curva_st = 50;
 vel_curva_hd = 10;
 vel_rotl = 20;
 vel_roth = 50;
@@ -20,43 +20,67 @@ int direction(int groundSensor){
 	printf("\n");
 	head++;
 	int i;
-	int countR=0,countF=0,countL=0,countB=0;
+	int countR=0,countF=0,countL=0,countB=0,countSR=0,countSL=0;
 	for(i=0;i<head;i++){
 		if(buffer[i]==0x1f){ 
 			countF++;
 			countL=0;
 			countB=0;
 			countR=0;
+			countSR=0;
+			countSL=0;
 		}	//11111
 		else if(buffer[i]==0x03||buffer[i]==0x01){
 			countR++; 	
 			countL=0;
 			countB=0;
 			countF=0;
+			countSR=0;
+			countSL=0;
 		}	//00011 || 00001
 		else if(buffer[i]==0x18||buffer[i]==0x10){
 			countL++;
 			countF=0;
 			countB=0;
 			countR=0;
+			countSR=0;
+			countSL=0;
 		}	//11000 || 10000
 		else if(buffer[i]==0x00){
 			countB++;
 			countL=0;
 			countF=0;
 			countR=0;
+			countSR=0;
+			countSL=0;
 		}	//00000
+		else if(buffer[i]==0x0c || buffer[i]==0x08){
+			countSL++;
+			countL=0;
+			countF=0;
+			countR=0;
+			countSR=0;	
+		}
+		else if(buffer[i]==0x06 || buffer[i]==0x02){
+			countSR++;
+			countL=0;
+			countF=0;
+			countR=0;
+			countSL=0;	
+		}
 		else{
 			countB=0;
 			countL=0;
 			countF=0;
 			countR=0;
+			countSR=0;
+			countSL=0;
 		}
 	}
-	printf("B: %d, R: %d, L: %d, F: %d \n",countB,countR,countL,countF);
+	printf("B: %d, R: %d, L: %d, F: %d, SL: %d, SR: %d\n",countB,countR,countL,countF,countSL,countSR);
 	if(groundSensor==0x1c || groundSensor==0x04) return front;
-	else if(groundSensor==0x06) return slightRight;
-	else if(groundSensor==0x0c) return slightLeft; 
+	else if(countSR>=2) return slightRight;
+	else if(countSL>=2) return slightLeft; 
 	else if(countR<2 && countL>=2) return left;
 	else if(countR>=2 || countF<=6) return right;
 	else if(countB>=2) return back;
