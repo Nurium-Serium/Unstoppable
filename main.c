@@ -19,7 +19,8 @@ int vel_rotl = 20;
 int vel_roth = 50;
 int count= 0;
 int buffer_size= 8;
-int buffer[buffer_size];
+int buffer[8];
+int flag= 0;
 
 void turnLeft(void){
 	setVel2(-vel_rotl, vel_roth);
@@ -55,7 +56,7 @@ void decision(){
 int main(void)
 {
    int groundSensor;
-   int buffer[8];
+   //int buffer[8];
 
    initPIC32();
    closedLoopControl( true );
@@ -102,9 +103,16 @@ int main(void)
                turnRight();
                break;
             case 0x1f:
-            	decision();
+            	//decision();
+            	flag++;
+            	in_front();
+            	delay(100);
+            	if(flag== 1){
+            		decision();
+            		flag= 0;
+            	}
             	break;
-            case 0x00;
+            case 0x00:
             	turnRight();
             	break;	
             default:
