@@ -10,13 +10,13 @@
 // ****************************************************************************
 //
 #include "mr32.h"
-int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth;
+//int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth;
 
-vel_max = 65;
-vel_curva_st = 40;
-vel_curva_hd = 10;
-vel_rotl = 20;
-vel_roth = 50;
+int vel_max = 65;
+int vel_curva_st = 40;
+int vel_curva_hd = 10;
+int vel_rotl = 20;
+int vel_roth = 50;
 
 void turnLeft(void){
 	setVel2(-vel_rotl, vel_roth);
@@ -72,19 +72,19 @@ int main(void)
                in_front();
                break;
             case 0x0C:  // 0b01100:
-               slight_right(vel_curva_st);
+               slight_Right(vel_curva_st);
                break;
             case 0x08:  // 0b01000:
-               slight_right(vel_curva_hd);
+               slight_Right(vel_curva_hd);
                break;
             case 0x10:  // 0b10000:
                turnLeft();
                break;
             case 0x06:  // 0b00110:
-               slight_left(vel_curva_st);
+               slight_Left(vel_curva_st);
                break;
             case 0x02:  // 0b00010:
-               slight_left(vel_curva_hd);
+               slight_Left(vel_curva_hd);
                break;
             case 0x01:  // 0b00001:
                turnRight();
