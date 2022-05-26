@@ -13,7 +13,7 @@ void reset_buffer(){
 	int i;
 	for(i=0;i<8;i++) buffer[i]=-1;
 }
-int direction(int groundSensor){
+enum dir direction(int groundSensor){
 	if(head==8) head=0;
 	buffer[head]=groundSensor;
 	printInt(groundSensor, 2 | 5 << 16);
@@ -92,7 +92,7 @@ void turnLeft(void){
 }
 
 void slight_Left(int vel){
-	setVel2(vel_r, vel);
+	setVel2(vel, vel_max);
 }
 
 void turnRight(void){
@@ -100,7 +100,7 @@ void turnRight(void){
 }
 
 void slight_Right(int vel){
-	setVel2(vel, vel_r);
+	setVel2(vel_max, vel);
 }
 
 void turnBack(void){
