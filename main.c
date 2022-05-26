@@ -23,7 +23,7 @@ int buffer[8];
 int flag= 0;
 
 void turnLeft(void){
-	setVel2(-vel_rotl, vel_roth);
+	setVel2(-vel_roth, vel_roth);
 	delay(500);
 }
 
@@ -32,7 +32,7 @@ void slight_Left(int vel){
 }
 
 void turnRight(void){
-	setVel2(vel_roth, -vel_rotl);
+	setVel2(vel_roth, -vel_roth);
 }
 
 void slight_Right(int vel){
@@ -88,7 +88,7 @@ int main(void)
                slight_Right(vel_curva_st);
                break;
             case 0x08:  // 0b01000:
-               slight_Right(vel_curva_hd);
+               turnLeft();
                break;
             case 0x34:  // 0b10000:
                turnLeft();
@@ -97,7 +97,7 @@ int main(void)
                slight_Left(vel_curva_st);
                break;
             case 0x02:  // 0b00010:
-               slight_Left(vel_curva_hd);
+               turnRight(vel_curva_hd);
                break;
             case 0x01:  // 0b00001:
                turnRight();
