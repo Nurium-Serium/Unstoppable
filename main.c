@@ -110,8 +110,11 @@ int main(void)
 	    case 0x02:  // 0b00010:
                turnRight();
                break;
+            case 0xe:
+            	turnRight();
             case 0x1f:
             	//decision();
+            	/*
             	flag++;
             	in_front();
             	delay(100);
@@ -119,6 +122,8 @@ int main(void)
             		decision();
             		flag= 0;
             	}
+            	*/
+            	turnRight();
             	break;
             case 0x00:
             	setVel2(-vel_curva_st, vel_curva_st);
