@@ -95,7 +95,7 @@ int main(void)
 	    case 0x08:  // 0b01000:
                turnLeft();
                break;
-            case 0x14:  // 0b11100:
+            case 0x1c:  // 0b11100:
                turnLeft();
                break;
             case 0x06:  // 0b00110:
