@@ -87,19 +87,19 @@ int main(void)
             case 0x0C:  // 0b01100:
                slight_Right(vel_curva_st);
                break;
-            case 0x08:  // 0b01000:
+            case 0x18:  // 0b11000:
                turnLeft();
                break;
-            case 0x34:  // 0b10000:
+            case 0x14:  // 0b11100:
                turnLeft();
                break;
             case 0x06:  // 0b00110:
                slight_Left(vel_curva_st);
                break;
-            case 0x02:  // 0b00010:
-               turnRight(vel_curva_hd);
+            case 0x03:  // 0b00011:
+               turnRight();
                break;
-            case 0x01:  // 0b00001:
+            case 0x07:  // 0b00111:
                turnRight();
                break;
             case 0x1f:
