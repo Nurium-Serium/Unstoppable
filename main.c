@@ -23,7 +23,8 @@ int buffer[8];
 int flag= 0;
 
 void turnLeft(void){
-	setVel2(-vel_roth, vel_roth);
+	setVel2(0, vel_roth);
+   delay(100);
 }
 
 void slight_Left(int vel){
@@ -31,11 +32,12 @@ void slight_Left(int vel){
 }
 
 void turnRight(void){
-	setVel2(vel_roth, -vel_roth);
+	setVel2(vel_roth, 0);
 }
 
 void slight_Right(int vel){
 	setVel2(vel, vel_max);
+   delay(100);
 }
 
 void turnBack(void){
