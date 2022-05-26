@@ -12,17 +12,17 @@
 #include "mr32.h"
 //int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth;
 
-int vel_max = 65;
-int vel_curva_st = 40;
+int vel_max = 50;
+int vel_curva_st = 35;
 int vel_curva_hd = 10;
 int vel_rotl = 20;
 int vel_roth = 50;
 enum dir{R,L,SR,SL,F,B,S};
 int direction(int groundS){
-	if(groundS==0x04 || groundS==0x1c) return F;
+	if(groundS==0x04) return F;
 	else if(groundS==0x08 || groundS==0x0c) return SL;
 	else if(groundS==0x06 || groundS==0x02) return SR;
-	else if(groundS==0x03 || groundS==0x01) return R;
+	else if(groundS==0x03 || groundS==0x01|| groundS==0x07) return R;
 	else if(groundS==0x18 || groundS==0x10) return L;
 	else if(groundS==0x00) return B;
 	else if(groundS==0x1f) return S;
@@ -69,7 +69,6 @@ int main(void){
          	printInt(groundSensor, 2 | 5 << 16);
          	printf("\n");
       	}
-		bef=groundSensor;
 		do{
         	groundSensor = readLineSensors(0);	// Read ground sensor
 			if(groundSensor!=0x1f) count=0;
@@ -87,17 +86,16 @@ int main(void){
 					else slight_Right(vel_curva_st);
 					break;
 				case R:
-					if(groundSensor==bef) turnLeft();
-					/*
-					countR++;
+					turnRight();
+				/*	countR++;
 					if(countR==2){					
 						turnRight();
 						countR=0;
 					}*/
 					break;
 				case L:
-					if(groundSensor==bef) turnRight();
-					/*countL++;
+					turnLeft();
+				/*	countL++;
 					if(countL==2){					
 						turnLeft();
 						countL=0;
@@ -112,8 +110,16 @@ int main(void){
 				default:
 					break;
 			}
-			if(count==7) break;
-			bef=groundSensor;
+			if(count>=2){ 
+				groundSensor = readLineSensors(0);
+				waitTick40ms();
+				if(groundSensor==0x1f)	break;
+				else{ 
+					turnRight();
+					
+				}
+			}
+			waitTick80ms();
 	}while(!stopButton());
       	setVel2(0, 0);
    	}

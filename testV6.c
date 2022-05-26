@@ -3,7 +3,6 @@ int buffer[8];
 int head=0;
 int vel_max, vel_curva_st, vel_curva_hd, vel_rotl, vel_roth, vel;
 vel_max = 50;
-vel_r=35;
 vel_curva_st = 35;
 vel_curva_hd = 10;
 vel_rotl = 20;
@@ -82,7 +81,7 @@ void slight_Right(int vel){
 
 void turnBack(void){
 	//setVel2(vel_curva_st, -vel_curva_st);
-	setVel2(50,-50);
+	setVel2(40,-40);
 	
 }
 void in_front(void){

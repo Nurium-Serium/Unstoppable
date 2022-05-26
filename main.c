@@ -16,14 +16,14 @@ int vel_max = 50;
 int vel_curva_st = 40;
 int vel_curva_hd = 10;
 int vel_rotl = 20;
-int vel_roth = 50;
+int vel_roth = 60;
 int count= 0;
 int buffer_size= 8;
 int buffer[8];
 int flag= 0;
 
 void turnLeft(void){
-	setVel2(0, vel_roth);
+	setVel2(-vel_curva_hd, vel_roth);
    delay(150);
 }
 
@@ -32,7 +32,7 @@ void slight_Left(int vel){
 }
 
 void turnRight(void){
-	setVel2(vel_roth, 0);
+	setVel2(vel_roth, -vel_curva_hd);
 	delay(150);
 }
 
