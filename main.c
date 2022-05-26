@@ -21,10 +21,15 @@ int count= 0;
 int buffer_size= 8;
 int buffer[8];
 int flag= 0;
+char decision_array[100];
+int head= 0;
+int front_flag= 0;
 
 void turnLeft(void){
 	setVel2(-vel_curva_hd, vel_roth);
-   delay(150);
+	delay(150);
+	decision_array[head]= "L";
+	optim();
 }
 
 void slight_Left(int vel){
@@ -48,10 +53,31 @@ void in_front(void){
 	setVel2(vel_max,vel_max);
 }
 
-void decision(){
+void end(void){
 	count++;
 	if(count>= buffer_size){
 		count= 0;
+	}
+}
+
+void optim(void){
+	if(head<3){
+		break;
+	}
+	else if(head== 100) head= 0;
+	else{
+		if(decision_array[head]== "B" && front_flag== 0){
+			front_flag= 1;
+			head++;
+		}
+		else if(decision_array[head]== "B" && front_flag== 1){
+			front_flag= 2;
+			head++;
+		else if(decision_array[head]== "R" && front_flag== 2){
+			head= head-2;
+			decision_array[head]= "F";
+			front_flag= 0;
+		}
 	}
 }
 
@@ -110,20 +136,19 @@ int main(void)
 	    case 0x02:  // 0b00010:
                turnRight();
                break;
-            case 0xe:
-            	turnRight();
-            case 0x1f:
-            	//decision();
-            	/*
-            	flag++;
+            case 0x0e:	//0b01110
             	in_front();
-            	delay(100);
-            	if(flag== 1){
-            		decision();
-            		flag= 0;
-            	}
-            	*/
-            	turnRight();
+            case 0x1f:
+            	
+            	//flag++;
+            	//in_front();
+            	//delay(50);
+            	//if(groundSensor= 0x1f){
+            		//setVel2(0,0);
+            	//}
+            	
+            	//else turnRight();
+		turnRight();
             	break;
             case 0x00:
             	setVel2(-vel_curva_st, vel_curva_st);
