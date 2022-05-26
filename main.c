@@ -24,7 +24,7 @@ int flag= 0;
 
 void turnLeft(void){
 	setVel2(0, vel_roth);
-   delay(100);
+   delay(150);
 }
 
 void slight_Left(int vel){
@@ -33,15 +33,16 @@ void slight_Left(int vel){
 
 void turnRight(void){
 	setVel2(vel_roth, 0);
+	delay(150);
 }
 
 void slight_Right(int vel){
 	setVel2(vel, vel_max);
-   delay(100);
 }
 
 void turnBack(void){
 	setVel2(vel_curva_st, -vel_curva_st);
+	delay(150);
 }
 void in_front(void){
 	setVel2(vel_max,vel_max);
